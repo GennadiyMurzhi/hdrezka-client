@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hdrezka_client/core/util/pre_search_result_maker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
+import 'package:hdrezka_client/features/title_for_main/cubit/title_for_main_cubit.dart';
+import '../util/pre_search_result_maker.dart';
 
 class PreResultWidget extends StatelessWidget {
   final PreResult preResult;
@@ -39,7 +42,11 @@ class PreResultWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap
               ),
-              onPressed: () {},
+              onPressed: () {
+                BlocProvider.of<SearchBloc>(context).add(ShowSearchResult());
+                BlocProvider.of<TitleForMainCubit>(context).titleSearch(
+                    BlocProvider.of<SearchBloc>(context).state.query);
+              },
               child: Text(
                 'Смотреть все результаты (ещё ${preResult.unreleasedFilmsCount} совпадений)',
                 style: const TextStyle(

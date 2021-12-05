@@ -25,3 +25,10 @@ class GetSearchResultForQuery extends SearchEvent {
   List<Object?> get props => [query];
 
 }
+
+class ShowSearchResult extends SearchEvent{
+  @override
+
+  List<Object?> get props => [];
+
+}

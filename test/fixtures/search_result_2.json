@@ -1,69 +1,4 @@
-import 'package:get_it/get_it.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
-import 'package:hdrezka_client/core/network/network_info.dart';
-import 'package:hdrezka_client/features/search/data/models/search_result_model.dart';
-import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart';
-import 'package:hdrezka_client/features/search/data/datasources/search_result_local_data_source.dart';
-import 'package:hdrezka_client/features/search/data/datasources/search_result_remote_data_source.dart';
-import 'package:hdrezka_client/features/search/domain/usecases/get_search_result_by_query.dart';
-import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-
-import 'features/list_display/util/list_of_film_receiver.dart';
-import 'features/search/data/repositories/search_result_repository_impl.dart';
-import 'features/search/domain/repositories/search_result_repositories.dart';
-
-final search = GetIt.instance;
-
-Future<void> initSearch() async {
-  //Features - search\\
-  //BLoC
-  search.registerFactory(
-          () => SearchBloc(
-              result: search(),
-              preResult: search()
-          )
-  );
-  //use case
-  search.registerLazySingleton(() => GetSearchResultByQuery(search()));
-  //Repository
-  search.registerLazySingleton<SearchResultRepository>(
-      () => SearchResultRepositoryImpl(
-          remoteDataSource: search<SearchResultRemoteDataSource>(),
-          localDataSource: search<SearchResultLocalDataSource>(),
-          networkInfo: search<NetworkInfo>())
-  );
-  //Data source
-  search.registerLazySingleton<SearchResultRemoteDataSource>(
-       () => SearchResultRemoteDataSourceImpl(client: search<http.Client>())
-  );
-
-  search.registerLazySingleton<SearchResultLocalDataSource>(
-      () => SearchResultLocalDataSourceImpl(sharedPreferences: search())
-  );
-
-
-  //Core\\
-  search.registerLazySingleton(() => PreSearchResultMaker());
-  search.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(search()));
-
-  //External\\
-  final sharedPreferences = await SharedPreferences.getInstance();
-  search.registerLazySingleton(() => sharedPreferences);
-  search.registerLazySingleton<http.Client>(() => http.Client());
-  search.registerLazySingleton(() => InternetConnectionChecker());
-}
-
-final listDisplay = GetIt.instance;
-
-Future<void> initListDisplay () async {
-  //rx
-  search.registerLazySingleton(() => ListOfFilmReceiver(SearchResultModel.fromJson(timeList).payload));
-}
-
-Map<String, dynamic> timeList = {
+{
   "id": 75,
   "query": "anime",
   "payload": [
@@ -176,4 +111,4 @@ Map<String, dynamic> timeList = {
   "status": "done",
   "created_at": "2021-12-01T12:02:04.000000Z",
   "updated_at": "2021-12-01T12:02:05.000000Z"
-};
+}

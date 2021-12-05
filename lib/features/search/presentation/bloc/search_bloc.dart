@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/list_display/util/list_of_film_receiver.dart';
+import 'package:hdrezka_client/injection_container.dart';
 import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hdrezka_client/core/error/failure.dart';
-import 'package:hdrezka_client/core/util/pre_search_result_maker.dart';
+import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart';
 import 'package:hdrezka_client/features/search/domain/usecases/get_search_result_by_query.dart';
 
 part 'search_event.dart';
@@ -17,6 +20,8 @@ const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final GetSearchResultByQuery? getSearchResultByQuery;
   final PreSearchResultMaker? preSearchResultMaker;
+
+  late List<FilmInformation> listOfFilmsFromResult;
 
   SearchBloc({
     required GetSearchResultByQuery result,
@@ -34,18 +39,25 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
               (failure) => emit(Error(
                   errorMessage: _failureToMessage(failure),
                   query: event.query)),
-              (searchResult) => emit(
-              Loaded(
-                  preResult: preSearchResultMaker!.listToPreResult(searchResult.payload),
-                  query: event.query
-              )));
+              (searchResult) {
+                listOfFilmsFromResult = searchResult.payload;
+                emit(Loaded(
+                    preResult: preSearchResultMaker!
+                        .listToPreResult(searchResult.payload),
+                    query: event.query));
+              });
     }, transformer: restartable());
 
-    on<Activated>((event, emit) {
+    on<Activated>((event, emit){
       emit(const Activate());
     });
 
     on<DeActivated>((event, emit){
+      emit(const DeActivate());
+    });
+
+    on<ShowSearchResult>((event, emit){
+      listDisplay<ListOfFilmReceiver>().getNewListOfFilms(listOfFilmsFromResult);
       emit(const DeActivate());
     });
   }

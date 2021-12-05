@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/list_display/widgets/list_display_widget.dart';
 import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
 import 'package:hdrezka_client/features/search/presentation/widgets/search_widget.dart';
+import 'package:hdrezka_client/features/title_for_main/title_widget.dart';
 
+import 'features/list_display/util/list_of_film_receiver.dart';
+import 'features/title_for_main/cubit/title_for_main_cubit.dart';
 import 'injection_container.dart';
 
 
@@ -18,8 +23,8 @@ class MainScreen extends StatelessWidget{
           builder: (context) => MultiBlocProvider(
               providers: [
                 BlocProvider<SearchBloc>(
-                    create: (context) => sl<SearchBloc>()),
-
+                    create: (context) => search<SearchBloc>()),
+                BlocProvider<TitleForMainCubit>(create: (context) => TitleForMainCubit())
               ],
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (BuildContext context, searchState){
@@ -48,8 +53,17 @@ class MainScreen extends StatelessWidget{
                           ),
                           body: SingleChildScrollView(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                //ContentView(filmList: _fakeList)
+                                const TitleForMainWidget(),
+                                SizedBox(height: MediaQuery.of(context).size.width * 0.005),
+                                StreamBuilder<List<FilmInformation>>(
+                                    stream: listDisplay<ListOfFilmReceiver>().getNewListEvent,
+                                    builder: (context, snapshot){
+                                    return snapshot.data != null
+                                        ? ListDisplay(listOfFilms: snapshot.data!)
+                                        : Container();
+                                })
                               ],
                             ),
                           ),

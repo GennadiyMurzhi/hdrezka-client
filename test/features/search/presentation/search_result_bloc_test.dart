@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hdrezka_client/core/error/failure.dart';
-import 'package:hdrezka_client/core/util/pre_search_result_maker.dart';
+import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart';
 import 'package:hdrezka_client/features/search/data/models/search_result_model.dart';
 import 'package:hdrezka_client/features/search/domain/usecases/get_search_result_by_query.dart';
 import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
