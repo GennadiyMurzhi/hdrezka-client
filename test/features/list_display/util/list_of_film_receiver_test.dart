@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/features/list_display/util/list_of_film_receiver.dart';
 import 'package:hdrezka_client/features/search/data/models/search_result_model.dart';
 import '../../../fixtures/fixture.dart';

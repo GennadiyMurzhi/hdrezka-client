@@ -15,7 +15,6 @@ class FilmInformation extends Equatable{
     required this.addition});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [url, name, type, imageUrl, addition];
 
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/features/list_display/util/list_of_film_receiver.dart';
 import 'package:hdrezka_client/injection_container.dart';
 import 'package:meta/meta.dart';

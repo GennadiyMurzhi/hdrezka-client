@@ -10,6 +10,8 @@ void main() async {
 
   await di.initSearch();
   await di.initListDisplay();
+  await di.initPage();
+
   runApp(const HdClient());
 }
 

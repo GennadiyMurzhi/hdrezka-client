@@ -5,15 +5,17 @@
 import 'dart:async' as _i6;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:hdrezka_client/core/entities/film_information.dart' as _i9;
 import 'package:hdrezka_client/core/error/failure.dart' as _i7;
-import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart' as _i4;
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart'
+    as _i9;
 import 'package:hdrezka_client/features/search/domain/entities/search_result.dart'
     as _i8;
 import 'package:hdrezka_client/features/search/domain/repositories/search_result_repositories.dart'
     as _i2;
 import 'package:hdrezka_client/features/search/domain/usecases/get_search_result_by_query.dart'
     as _i5;
+import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

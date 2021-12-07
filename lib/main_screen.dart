@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/features/list_display/widgets/list_display_widget.dart';
 import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
 import 'package:hdrezka_client/features/search/presentation/widgets/search_widget.dart';

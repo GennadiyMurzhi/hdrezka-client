@@ -1,4 +1,4 @@
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 
 class FilmInformationModel extends FilmInformation {
   const FilmInformationModel({

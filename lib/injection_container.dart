@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/film/domain/usecases/get_film.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/core/network/network_info.dart';
 import 'package:hdrezka_client/features/search/data/models/search_result_model.dart';
 import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart';
@@ -11,6 +12,10 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'features/film/data/datasurces/film_local_data_source.dart';
+import 'features/film/data/datasurces/film_remote_data_source.dart';
+import 'features/film/data/repositories/film_repository_impl.dart';
+import 'features/film/domain/repository/film_repository.dart';
 import 'features/list_display/util/list_of_film_receiver.dart';
 import 'features/search/data/repositories/search_result_repository_impl.dart';
 import 'features/search/domain/repositories/search_result_repositories.dart';
@@ -61,6 +66,38 @@ final listDisplay = GetIt.instance;
 Future<void> initListDisplay () async {
   //rx
   search.registerLazySingleton(() => ListOfFilmReceiver(SearchResultModel.fromJson(timeList).payload));
+}
+
+final page = GetIt.instance;
+
+Future<void> initPage () async {
+  //use case
+  page.registerLazySingleton(() => GetFilm(page()));
+  //Repository
+  page.registerLazySingleton<FilmRepository>(
+          () => FilmRepositoryImpl(
+          remoteDataSource: page<FilmRemoteDataSource>(),
+          localDataSource: page<FilmLocalDataSource>(),
+          networkInfo: page<NetworkInfo>())
+  );
+  //Data source
+  page.registerLazySingleton<FilmRemoteDataSource>(
+          () => FilmRemoteDataSourceImpl(client: page<http.Client>())
+  );
+
+  page.registerLazySingleton<FilmLocalDataSource>(
+          () => FilmLocalDataSourceImpl(sharedPreferences: page())
+  );
+
+
+  //Core\\
+  page.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(page()));
+
+  //External\\
+  final sharedPreferences = await SharedPreferences.getInstance();
+  page.registerLazySingleton(() => sharedPreferences);
+  page.registerLazySingleton<http.Client>(() => http.Client());
+  page.registerLazySingleton(() => InternetConnectionChecker());
 }
 
 Map<String, dynamic> timeList = {

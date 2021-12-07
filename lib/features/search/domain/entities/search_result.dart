@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 
 class SearchResult extends Equatable{
   final int id;

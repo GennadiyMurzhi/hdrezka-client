@@ -82,12 +82,14 @@ ThemeData lightTheme = ThemeData(
           fontFamily: 'Roboto',
           fontWeight: FontWeight.w500),
       bodyText1: TextStyle(
-        fontSize: 14,
+        fontSize: 22,
         color: Color(0xff444444),
+        fontFamily: 'Roboto',
       ),
       bodyText2: TextStyle(
-        fontSize: 14,
+        fontSize: 22,
         color: Color(0xff777777),
+        fontFamily: 'Roboto',
       ),
       button: TextStyle(
         fontSize: 28,

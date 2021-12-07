@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
-import 'package:hdrezka_client/core/models/film_information_model.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/data/models/film_information_model.dart';
 
-import '../../fixtures/fixture.dart';
+import '../../../../fixtures/fixture.dart';
 
 void main () {
   const String url = "https://rezka.ag/films/fantasy/41834-snova-privet-1987.html";

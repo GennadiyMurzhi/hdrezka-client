@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
-import 'package:hdrezka_client/core/models/film_information_model.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/data/models/film_information_model.dart';
 import 'package:hdrezka_client/features/search/domain/entities/search_result.dart';
 import 'package:hdrezka_client/features/search/domain/repositories/search_result_repositories.dart';
 import 'package:hdrezka_client/features/search/domain/usecases/get_search_result_by_id.dart';

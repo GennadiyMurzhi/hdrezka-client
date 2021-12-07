@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hdrezka_client/core/entities/film_information.dart';
+import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/features/list_display/widgets/poster_and_info_for_wrap_widget.dart';
 import '../cubit/list_display_cubit.dart';
 
