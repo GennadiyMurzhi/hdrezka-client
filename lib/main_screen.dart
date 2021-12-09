@@ -57,11 +57,12 @@ class MainScreen extends StatelessWidget{
                               children: [
                                 const TitleForMainWidget(),
                                 SizedBox(height: MediaQuery.of(context).size.width * 0.005),
-                                StreamBuilder<List<FilmInformation>>(
+                                StreamBuilder<ListOfFilmsParams>(
                                     stream: listDisplay<ListOfFilmReceiver>().getNewListEvent,
                                     builder: (context, snapshot){
                                     return snapshot.data != null
-                                        ? ListDisplay(listOfFilms: snapshot.data!)
+                                        ? ListDisplay(search_request_id: snapshot.data!.search_request_id,
+                                            listOfFilms: snapshot.data!.listOfFilmInformation)
                                         : Container();
                                 })
                               ],

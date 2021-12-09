@@ -23,6 +23,7 @@ class FilmRepositoryImpl extends FilmRepository{
       try {
         final remoteFilm = await remoteDataSource.getFilm(search_request_id, url, type);
         localDataSource.cacheFilm(remoteFilm);
+        print('OK');
         return Right(remoteFilm);
       } on ServerException {
         return Left(ServerFailure());

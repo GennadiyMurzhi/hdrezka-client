@@ -22,6 +22,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final PreSearchResultMaker? preSearchResultMaker;
 
   late List<FilmInformation> listOfFilmsFromResult;
+  late int search_request_id;
 
   SearchBloc({
     required GetSearchResultByQuery result,
@@ -40,10 +41,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
                   errorMessage: _failureToMessage(failure),
                   query: event.query)),
               (searchResult) {
+                search_request_id = searchResult.id;
                 listOfFilmsFromResult = searchResult.payload;
                 emit(Loaded(
                     preResult: preSearchResultMaker!
-                        .listToPreResult(searchResult.payload),
+                        .listToPreResult(search_request_id, searchResult.payload),
                     query: event.query));
               });
     }, transformer: restartable());
@@ -57,7 +59,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     });
 
     on<ShowSearchResult>((event, emit){
-      listDisplay<ListOfFilmReceiver>().getNewListOfFilms(listOfFilmsFromResult);
+      listDisplay<ListOfFilmReceiver>().getNewListOfFilms(
+          ListOfFilmsParams(search_request_id: search_request_id,
+              listOfFilmInformation: listOfFilmsFromResult));
       emit(const DeActivate());
     });
   }

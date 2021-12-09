@@ -6,9 +6,11 @@ import 'package:hdrezka_client/features/list_display/widgets/poster_and_info_for
 import '../cubit/list_display_cubit.dart';
 
 class ListDisplay extends StatelessWidget {
+  //TODO: FIX NEEDING IN SEARCH RESULT ID OR OTHER ID
+  final int search_request_id;
   final List<FilmInformation> listOfFilms;
 
-  const ListDisplay({Key? key, required this.listOfFilms}) : super(key: key);
+  const ListDisplay({Key? key, required this.search_request_id, required this.listOfFilms}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,6 @@ class ListDisplay extends StatelessWidget {
       child: BlocBuilder<ListDisplayCubit, ListDisplayState>(
           builder: (BuildContext context, ListDisplayState state) {
         return SingleChildScrollView(
-
             child: Column(
               children: [
                 Row(
@@ -54,21 +55,25 @@ class ListDisplay extends StatelessWidget {
                             children: List.generate(
                                 listOfFilms.length,
                                 (index) => PosterAndInfoForWrap(
+                                    search_request_id: search_request_id,
                                     type: listOfFilms.elementAt(index).type,
                                     nameFilm: listOfFilms.elementAt(index).name,
                                     addition: listOfFilms.elementAt(index).addition,
-                                    imageUrl: listOfFilms.elementAt(index).imageUrl
+                                    imageUrl: listOfFilms.elementAt(index).imageUrl,
+                                    filmUrl: listOfFilms.elementAt(index).url
                                 ))),
                     )
                     : Column(
                         children: List.generate(
                             listOfFilms.length,
                             (index) => PosterAndInfoForWrap(
+                                search_request_id: search_request_id,
                                 type: listOfFilms.elementAt(index).type,
                                 nameFilm: listOfFilms.elementAt(index).name,
                                 addition: listOfFilms.elementAt(index).addition,
-                                imageUrl: listOfFilms.elementAt(index).imageUrl
-                            )),
+                                imageUrl: listOfFilms.elementAt(index).imageUrl,
+                                filmUrl: listOfFilms.elementAt(index).url
+                            ))
                       )
               ],
             ),

@@ -46,6 +46,14 @@ class SearchView extends StatelessWidget{
                         child: Row(
                             children: [
                               const Spacer(),
+                              BlocProvider.of<SearchBloc>(context).state is Loading ?
+                              //TODO: FIX to adaptive
+                              Container(
+                                  width: 40, height: 45,
+                                  alignment: Alignment.center,
+                                  child: const SizedBox(width: 30, height: 30,
+                                      child: CircularProgressIndicator(strokeWidth: 3,)))
+                                  :
                               IconButton(
                                   color: Theme.of(context).appBarTheme.iconTheme!.color,
                                   iconSize: 24 ,
@@ -87,8 +95,8 @@ class SearchView extends StatelessWidget{
                                     _textSearchController.text = '';
                                     BlocProvider.of<SearchBloc>(context).add(const SearchRestarted());
                                   },
-                                  icon: const FaIcon(FontAwesomeIcons.times)),*/
-                              const Spacer()
+                                  icon: const FaIcon(FontAwesomeIcons.times)),
+                              const Spacer()*/
                             ]),
                       ),]
                   ),

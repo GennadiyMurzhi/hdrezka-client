@@ -15,5 +15,5 @@ class TitleSearch extends TitleForMainState {
   const TitleSearch(String query) : title = 'Результат поиска для ' + query;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [title];
 }

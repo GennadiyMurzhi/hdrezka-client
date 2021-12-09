@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:hdrezka_client/features/film/domain/usecases/get_film.dart';
-import 'package:hdrezka_client/features/search/domain/entities/film_information.dart';
 import 'package:hdrezka_client/core/network/network_info.dart';
 import 'package:hdrezka_client/features/search/data/models/search_result_model.dart';
 import 'package:hdrezka_client/features/search/presentation/util/pre_search_result_maker.dart';
@@ -60,12 +59,17 @@ Future<void> initSearch() async {
   search.registerLazySingleton<http.Client>(() => http.Client());
   search.registerLazySingleton(() => InternetConnectionChecker());
 }
-
+//TODO: remove that is below
 final listDisplay = GetIt.instance;
 
 Future<void> initListDisplay () async {
   //rx
-  search.registerLazySingleton(() => ListOfFilmReceiver(SearchResultModel.fromJson(timeList).payload));
+  listDisplay.registerLazySingleton(() => ListOfFilmReceiver(
+      //TODO: FIX
+      ListOfFilmsParams(search_request_id: SearchResultModel.fromJson(timeList).id,
+          listOfFilmInformation: SearchResultModel.fromJson(timeList).payload)
+
+  ));
 }
 
 final page = GetIt.instance;
@@ -88,129 +92,98 @@ Future<void> initPage () async {
   page.registerLazySingleton<FilmLocalDataSource>(
           () => FilmLocalDataSourceImpl(sharedPreferences: page())
   );
-
-
-  //Core\\
-  page.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(page()));
-
-  //External\\
-  final sharedPreferences = await SharedPreferences.getInstance();
-  page.registerLazySingleton(() => sharedPreferences);
-  page.registerLazySingleton<http.Client>(() => http.Client());
-  page.registerLazySingleton(() => InternetConnectionChecker());
 }
 
 Map<String, dynamic> timeList = {
-  "id": 75,
-  "query": "anime",
+  "id": 139,
+  "query": "eva",
   "payload": [
     {
-      "url": "https://rezka.ag/films/drama/17035-chernye-dushi-2014.html",
-      "name": "Чёрные души",
+      "url": "https://rezka.ag/films/fiction/457-eva-iskusstvennyy-razum-2011.html",
+      "name": "Ева: Искусственный разум",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2016/7/18/n9271d96b5c16ew98b96u.jpg",
-      "addition": "2014, Италия, Драмы"
+      "image": "https://static.hdrezka.ac/i/2013/9/17/had59065f0554jm57w25m.jpg",
+      "addition": "2011, Испания, Фантастика"
     },
     {
-      "url": "https://rezka.ag/films/drama/17849-zhenskaya-tyurma-ad-dlya-zhenschin-2006.html",
-      "name": "Женская тюрьма: Ад для женщин",
+      "url": "https://rezka.ag/films/drama/27857-eva-2018.html",
+      "name": "Ева",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2016/8/4/wcf4e7207a862xw12w42a.jpg",
-      "addition": "2006, Италия, Драмы"
+      "image": "https://static.hdrezka.ac/i/2020/12/26/se42ee7494e02to57d10n.jpg",
+      "addition": "2018, Франция, Драмы"
     },
     {
-      "url": "https://rezka.ag/films/horror/3321-vozvraschenie-reanimatora-2003.html",
-      "name": "Возвращение реаниматора",
+      "url": "https://rezka.ag/films/fantasy/7357-evan-vsemoguschiy-2007.html",
+      "name": "Эван Всемогущий",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/h5f8ddc85005eon26n60h.jpg",
-      "addition": "2003, Испания, Ужасы"
+      "image": "https://static.hdrezka.ac/i/2014/12/19/f7770e1dda26bcr90f45t.jpg",
+      "addition": "2007, США, Фэнтези"
     },
     {
-      "url": "https://rezka.ag/films/horror/5036-nevesta-reanimatora-1989.html",
-      "name": "Невеста реаниматора",
+      "url": "https://rezka.ag/films/documentary/18056-evakuaciya-s-zemli-2012.html",
+      "name": "Эвакуация с Земли",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/s3a75c27007a9aq57u86e.jpg",
-      "addition": "1989, США, Ужасы"
+      "image": "https://static.hdrezka.ac/i/2016/8/9/i013995c2382cqe97w42m.jpg",
+      "addition": "2012, США, Документальные"
     },
     {
-      "url": "https://rezka.ag/films/comedy/7045-chudovische-1977.html",
-      "name": "Чудовище",
+      "url": "https://rezka.ag/films/adventures/33574-eva-za-bortom-2017.html",
+      "name": "Ева за бортом",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/caad2a0df9acdua64m53y.jpg",
-      "addition": "1977, Франция, Комедии"
+      "image": "https://static.hdrezka.ac/i/2020/2/28/cec4bba355bf9wa88s15t.jpg",
+      "addition": "2017, Германия, Приключения"
     },
     {
-      "url": "https://rezka.ag/films/horror/7058-reanimator-1985.html",
-      "name": "Реаниматор",
+      "url": "https://rezka.ag/films/drama/38679-chernaya-emmanuel-v-yaponii-1976.html",
+      "name": "Черная Эммануэль в Японии",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/te837ea119d47tw66q95u.jpg",
-      "addition": "1985, США, Ужасы"
+      "image": "https://static.hdrezka.ac/i/2021/4/6/jfa1a3ef865b5oq60f33d.jpeg",
+      "addition": "1976, Италия, Драмы"
     },
     {
-      "url": "https://rezka.ag/films/action/7198-pozhiznenno-2010.html",
-      "name": "Пожизненно / Гнев Каина",
+      "url": "https://rezka.ag/films/melodrama/15074-adam-i-eva-2002.html",
+      "name": "Адам и Ева",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/w64458e425ff8ak18r60i.jpg",
-      "addition": "2010, США, Боевики"
+      "image": "https://static.hdrezka.ac/i/2016/6/7/ce02caf70919azj12z20e.jpg",
+      "addition": "2002, Австрия, Мелодрамы"
     },
     {
-      "url": "https://rezka.ag/films/fantasy/7410-enimals-2012.html",
-      "name": "Энималс",
+      "url": "https://rezka.ag/films/horror/17977-oderzhimost-emmy-evans-2010.html",
+      "name": "Одержимость Эммы Эванс",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2014/12/19/e0d22c3cd6eabmd10y52r.jpg",
-      "addition": "2012, Испания, Фэнтези"
+      "image": "https://static.hdrezka.ac/i/2016/8/7/bc753bd17aa6ebs89x97n.jpg",
+      "addition": "2010, Испания, Ужасы"
     },
     {
-      "url": "https://rezka.ag/films/horror/8518-zhivotnoe-2013.html",
-      "name": "Животное",
+      "url": "https://rezka.ag/films/horror/20787-istoriya-evy-2015.html",
+      "name": "История Евы",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2015/5/11/af7df5c154a1adg17y17f.jpg",
-      "addition": "2013, США, Ужасы"
+      "image": "https://static.hdrezka.ac/i/2016/10/17/oac36b8ec6dbbxw88j52x.jpg",
+      "addition": "2015, США, Ужасы"
     },
     {
-      "url": "https://rezka.ag/films/drama/9158-zverofabrika-2000.html",
-      "name": "Зверофабрика",
+      "url": "https://rezka.ag/films/drama/28389-besporyadochnye-dni-lihie-90-ye-2016.html",
+      "name": "Беспорядочные дни – Лихие 90-ые",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2015/5/11/r1ccfe07f4975wl78m51y.jpg",
-      "addition": "2000, США, Драмы"
+      "image": "https://static.hdrezka.ac/i/2020/12/26/ca291171b3dabqs11j51x.jpg",
+      "addition": "2016, Эстония, Драмы"
     },
     {
-      "url": "https://rezka.ag/films/comedy/9392-moya-semya-i-drugie-zveri-2005.html",
-      "name": "Моя семья и другие звери",
+      "url": "https://rezka.ag/films/documentary/34711-v-poiskah-evy-2019.html",
+      "name": "В поисках Евы",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2015/6/20/wf7fc32965854js13h69f.jpg",
-      "addition": "2005, Великобритания, Комедии"
+      "image": "https://static.hdrezka.ac/i/2020/6/7/p61e69054e0e1nh80s39z.jpeg",
+      "addition": "2019, Германия, Документальные"
     },
     {
-      "url": "https://rezka.ag/films/horror/9427-kogda-zveri-mechtayut-2014.html",
-      "name": "Когда звери мечтают",
+      "url": "https://rezka.ag/films/drama/42217-novoe-evangelie-2020.html",
+      "name": "Новое Евангелие",
       "type": "films",
-      "image": "https://static.hdrezka.ac/i/2015/6/20/e8e09b143e22ejj81e63a.jpg",
-      "addition": "2014, Дания, Ужасы"
-    },
-    {
-      "url": "https://rezka.ag/films/drama/9659-po-volchim-zakonam-2010.html",
-      "name": "По волчьим законам / Царство зверей",
-      "type": "films",
-      "image": "https://static.hdrezka.ac/i/2019/7/14/b0b6e79d557c9af73v38y.jpg",
-      "addition": "2010, Австралия, Драмы"
-    },
-    {
-      "url": "https://rezka.ag/films/comedy/9800-zhivotnoe-2001.html",
-      "name": "Животное",
-      "type": "films",
-      "image": "https://static.hdrezka.ac/i/2015/6/20/e98e692143b28ru61s25y.jpg",
-      "addition": "2001, США, Комедии"
-    },
-    {
-      "url": "https://rezka.ag/films/comedy/13805-zverinec-1978.html",
-      "name": "Зверинец",
-      "type": "films",
-      "image": "https://static.hdrezka.ac/i/2016/5/8/keb3b0eca0b6ebs12y37j.jpg",
-      "addition": "1978, США, Комедии"
+      "image": "https://static.hdrezka.ac/i/2021/10/9/p89c5accf22d1pj51j37x.jpg",
+      "addition": "2020, Германия, Драмы"
     }
   ],
   "status": "done",
-  "created_at": "2021-12-01T12:02:04.000000Z",
-  "updated_at": "2021-12-01T12:02:05.000000Z"
+  "created_at": "2021-12-09T13:22:07.000000Z",
+  "updated_at": "2021-12-09T13:22:08.000000Z"
 };

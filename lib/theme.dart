@@ -53,6 +53,7 @@ ThemeData lightTheme = ThemeData(
   hintColor: const Color(0xff777777),
   errorColor: Colors.deepOrange,
   toggleableActiveColor: const Color(0xff3e464c),
+  dividerColor: Color(0xff77778a),
   textTheme: const TextTheme(
       headline1: TextStyle(
         fontSize: 56,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hdrezka_client/features/film/presentation/film_screen.dart';
 import 'package:hdrezka_client/features/search/presentation/bloc/search_bloc.dart';
 import 'package:hdrezka_client/features/title_for_main/cubit/title_for_main_cubit.dart';
 import '../util/pre_search_result_maker.dart';
@@ -69,9 +70,23 @@ class PreResultWidget extends StatelessWidget {
                   shape: MaterialStateProperty.all<OutlinedBorder>(const ContinuousRectangleBorder(
                       side: BorderSide(width: 0, color: Color.fromRGBO(0, 0, 0, 0)))),
                   alignment: Alignment.centerLeft,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+                    textBaseline: TextBaseline.alphabetic
+                  ))
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => FilmScreen(
+                          search_request_id: preResult.search_request_id,
+                          imageUrl: preResult.preResultList[index~/2].imageUrl,
+                          name: preResult.preResultList[index~/2].name,
+                          type: preResult.preResultList[index~/2].type,
+                          addition: preResult.preResultList[index~/2].addition,
+                          filmUrl: preResult.preResultList[index~/2].url)));
+                BlocProvider.of<SearchBloc>(context).add(DeActivated());
+                },
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -96,7 +111,7 @@ class PreResultWidget extends StatelessWidget {
                 ),
               ));
         } else {
-          return const Divider(height: 2,
+          return Container(height: 2, color: Theme.of(context).dividerColor,
           );
         }
       }),

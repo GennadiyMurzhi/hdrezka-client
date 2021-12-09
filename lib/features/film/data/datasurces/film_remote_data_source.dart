@@ -18,7 +18,7 @@ class FilmRemoteDataSourceImpl extends FilmRemoteDataSource{
     final response = await client.post(
       Uri.parse('http://10.0.2.2/page'),
       body: {
-        'search_request_id': search_request_id,
+        'search_request_id': search_request_id.toString(),
         'url': url,
         'type': type
       },

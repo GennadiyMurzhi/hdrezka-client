@@ -1,19 +1,25 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hdrezka_client/features/film/presentation/film_screen.dart';
 
 class PosterAndInfoForWrap extends StatelessWidget {
+  final int search_request_id;
   final String type;
   final String nameFilm;
   final String addition;
   final String imageUrl;
+  final String filmUrl;
 
   const PosterAndInfoForWrap(
       {Key? key,
+      required this.search_request_id,
       required this.type,
       required this.nameFilm,
       required this.addition,
-      required this.imageUrl})
+      required this.imageUrl,
+      required this.filmUrl})
       : super(key: key);
 
   @override
@@ -63,7 +69,17 @@ class PosterAndInfoForWrap extends StatelessWidget {
         Material(
           type: MaterialType.transparency,
           child: InkWell(
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => FilmScreen(
+                          search_request_id: search_request_id,
+                          imageUrl: imageUrl,
+                          name: nameFilm,
+                          type: type,
+                          addition: addition,
+                          filmUrl: filmUrl)));
+            },
             child: SizedBox(
               width: sizePoster.posterWidth,
               child: Column(
@@ -73,22 +89,14 @@ class PosterAndInfoForWrap extends StatelessWidget {
                     height: sizePoster.posterHeight,
                   ),
                   nameFilm.length *
-                      Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .fontSize!
-                          .toDouble() *
+                      Theme.of(context).textTheme.subtitle1!.fontSize!.toDouble() *
                       MediaQuery.of(context).textScaleFactor >
                       sizePoster.posterWidth
                       ? Text(
                       _stringToStringWithEllipsis(
                           nameFilm,
                           sizePoster.posterWidth,
-                          Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .fontSize!
-                              .toDouble() *
+                          Theme.of(context).textTheme.subtitle1!.fontSize!.toDouble() *
                               MediaQuery.of(context).textScaleFactor),
                       style: Theme.of(context).textTheme.subtitle1)
                       : Text(nameFilm, style: Theme.of(context).textTheme.subtitle1),

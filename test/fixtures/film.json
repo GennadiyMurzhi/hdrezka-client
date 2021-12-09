@@ -1,12 +1,27 @@
 {
-  "search_request_id": 0,
+  "id": 3,
+  "search_request_id": 136,
   "url": "https://rezka.ag/films/fantasy/41834-snova-privet-1987.html",
   "type": "films",
   "payload": [
     {
-      "resolution": "360p",
-      "url": "https://stream.voidboost.cc/3/7/6/9/8/8/ebbad219ee853a9ef1e68cdf9df87381:2021100517:2e179457-952a-4834-a712-0fcaa5358126/bie1b.mp4"
+      "url": "https://stream.voidboost.cc/3/5/5/3/9/3/a053935baf0d5519713458a66236a5de:2021120918:55281645-de85-4a4f-b47f-5a1985fd15ad/4oa58.mp4",
+      "resolution": "360p"
+    },
+    {
+      "url": "https://stream.voidboost.cc/3/5/5/3/9/3/a053935baf0d5519713458a66236a5de:2021120918:55281645-de85-4a4f-b47f-5a1985fd15ad/sm91s.mp4",
+      "resolution": "480p"
+    },
+    {
+      "url": "https://stream.voidboost.cc/3/5/5/3/9/3/a053935baf0d5519713458a66236a5de:2021120918:55281645-de85-4a4f-b47f-5a1985fd15ad/a8qqr.mp4",
+      "resolution": "720p"
+    },
+    {
+      "url": "https://stream.voidboost.cc/3/5/5/3/9/3/a053935baf0d5519713458a66236a5de:2021120918:55281645-de85-4a4f-b47f-5a1985fd15ad/ni308.mp4",
+      "resolution": "1080p"
     }
   ],
-  "status": "string"
+  "status": "done",
+  "created_at": "2021-12-08T19:00:16.000000Z",
+  "updated_at": "2021-12-08T19:00:17.000000Z"
 }

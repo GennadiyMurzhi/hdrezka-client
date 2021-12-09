@@ -4,7 +4,8 @@ import 'package:hdrezka_client/features/search/domain/entities/film_information.
 import 'package:hdrezka_client/core/error/failure.dart';
 
 class PreSearchResultMaker {
-  PreResult listToPreResult(List<FilmInformation> listOfFoundFilms){
+  PreResult listToPreResult(int search_request_id,
+      List<FilmInformation> listOfFoundFilms) {
     final int unreleasedFilmsCount;
     final List<FilmInformation> preResultList;
 
@@ -18,16 +19,18 @@ class PreSearchResultMaker {
     }
 
     return PreResult(
+        search_request_id: search_request_id,
         preResultList: preResultList,
         unreleasedFilmsCount: unreleasedFilmsCount);
   }
 }
 
 class PreResult extends Equatable{
+  final int search_request_id;
   final int unreleasedFilmsCount;
   final List<FilmInformation> preResultList;
 
-  PreResult({required this.unreleasedFilmsCount, required this.preResultList});
+  PreResult({required this.search_request_id, required this.unreleasedFilmsCount, required this.preResultList});
 
   @override
   List<Object?> get props => [unreleasedFilmsCount, preResultList];
