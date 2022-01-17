@@ -11,5 +11,15 @@ class LinkVideo extends Equatable {
 
   @override
   List<Object?> get props => [resolution, url];
+}
 
+class LinkVideoList extends Equatable{
+  final List<LinkVideo> linkVideoList;
+
+  const LinkVideoList({
+    required this.linkVideoList
+  });
+
+  @override
+  List<Object?> get props => [linkVideoList];
 }
